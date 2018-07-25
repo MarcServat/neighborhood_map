@@ -64,7 +64,9 @@ var MarkerService = function(data) {
         populateInfoWindow(this, infoWindow);
         map.panTo(this.getPosition());
     });
-
+    this.show = function() {
+        google.maps.event.trigger(self.marker, 'click');
+    };
 };
 
 // Add info to each marker
@@ -98,3 +100,4 @@ function initMap() {
     
     ko.applyBindings(new ViewModel());
 };
+

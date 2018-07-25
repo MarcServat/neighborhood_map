@@ -1,10 +1,13 @@
 body {
     height: 100vh;
+    display: flex;
 }
 
 .container {
     height: 100%;
     width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .map {
@@ -19,6 +22,40 @@ body {
     background-color: #17263c;
 }
 
-.search-input {
+.sidebar-header {
+    margin: 15px;
+}
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+}
 
+#sidebar.active {
+    margin-left: -250px;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul {
+    list-style-type: none;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
 }
