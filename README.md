@@ -8,6 +8,10 @@ The app is shown climbing indoor gym locations at Barcelona city.
 
 For modify the locations edit the file  **data-model.js**.
 
+# Third party API
+
+Foursquare has been integrating to display the formatted addresses. It's used an async method to load the info and it has been provide an error handler.
+
 
 # Run it
 
