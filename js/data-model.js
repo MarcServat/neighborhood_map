@@ -1,5 +1,5 @@
 var places = [{
-        title: 'Sharma Climbing',
+        title: 'Sharma Climbing Barcelona',
         lat: 41.415723,
         lng: 2.21055,
         content: 'Best place for boulder, some rope could be found it though',
@@ -27,7 +27,7 @@ var places = [{
         category: 'boulder'
     },
     {
-        title: 'Indoorwall Clot',
+        title: "Sala d'Escalada Magnesi",
         lat: 41.411389,
         lng: 2.189146,
         content: 'Both boulder and rope. Not highest grade in BCN',

@@ -19,6 +19,7 @@ var ViewModel = function() {
         var searchFilter = this.searchItem().toLowerCase();
         if (searchFilter) {
             return ko.utils.arrayFilter(this.markersList(), function(marker) {
+                console.log(marker)
                 var str = marker.title.toLowerCase();
                 var result = str.includes(searchFilter);
                 marker.visible(result);
@@ -52,7 +53,7 @@ var MarkerService = function(data) {
 
     self.filterMarkers = ko.computed(function () {
         // set marker and extend bounds (showListings)
-        if(self.visible() === true) {
+        if(self.visible()) {
             self.marker.setMap(map);
         } else {
             self.marker.setMap(null);
@@ -71,12 +72,39 @@ var MarkerService = function(data) {
 
 // Add info to each marker
 function populateInfoWindow(marker, infowindow) {
-    // Info to display at the marker
-    var windowContent = `<h4>${marker.title}</h4><p>${marker.content}</p>`       
-    infowindow.setContent(windowContent);
-   
-    infowindow.open(map, marker);
+
+    getFoursquareInfo(marker).then(res => {
+        var location = res.response.venues[0].location.formattedAddress;
+        // Info to display at the marker
+        var windowContent = `<h4>${marker.title}</h4>
+                            <p>${marker.content}</p>
+                            <p>${location[0]} - ${location[1]}</p>`;     
+        infowindow.setContent(windowContent);
+
+        infowindow.open(map, marker);
+    });
+
 };
+
+function getFoursquareInfo(marker) {
+    var url = 'https://api.foursquare.com/v2/venues/search?';
+    var params = {
+        ll: `${marker.position.lat()},${marker.position.lng()}`,
+        query: marker.title,
+        client_id: '1PMUEZORRLI1S3MNVQMRVNS1H0RLDJJFWGMIEVJUI43NDHBI',
+        client_secret: 'UZS2EHEMKUGPHSKLEMQPXMX5LDDS0QBSMOAEZDJG2Z3A40WZ',
+        v: '20180730'
+    }
+    return $.get(url, params, function(res) {
+        return res;
+    }).fail(function(err) {
+        if (err.responseJSON.meta.errorDetail) {
+            alert(`${err.responseJSON.meta.errorDetail}`);
+        } else {
+            alert('Something went wrong');
+        }
+    });
+}
 
 // handle error Google API fails
 var gogleMapsError = function() {
